@@ -1,8 +1,12 @@
-const {Router} = require('express')
+const {Router} = require('express');
+const TagController = require('../controllers/TagController');
+
+
+const tagController = new TagController()
 
 const route = Router();
 
 
-route.get('/tags', (req, res)=>{
-    res.status(200).json({message:"opa"})
-})
+route.get('/tags', (req, res)=> tagController.pegaTodosRegistroController(req,res))
+
+module.exports = route
