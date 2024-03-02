@@ -3,10 +3,10 @@ const RuleServices = require('../services/RuleServices.js');
 
 const ruleServices = new RuleServices();
 
-class ruleController extends Controller {
+class RuleController extends Controller {
   constructor() {
     super(ruleServices);
   }
 }
 
-module.exports = ruleController;
+module.exports = RuleController;
