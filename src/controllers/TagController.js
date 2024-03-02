@@ -3,11 +3,11 @@ const TagServices = require("../services/TagServices.js")
 
 const tagServices = new TagServices()
 
-class tagController extends Controller{
+class TagController extends Controller{
     constructor(){
         super(tagServices)
     }
 }
 
 
-module.exports = tagController;
+module.exports = TagController;

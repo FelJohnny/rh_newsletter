@@ -5,8 +5,6 @@ const ruleController = new RuleController();
 
 const route = Router();
 
-route.get('/rules', (req, res) =>
-  ruleController.pegaTodosRegistroController(req, res),
-);
+route.get('/rules', (req, res) => ruleController.pegaTodosRegistroController(req, res));
 
 module.exports = route;
