@@ -1,9 +1,9 @@
 const Services = require('./services');
 
-class TagServices extends Services {
+class RuleServices extends Services {
   constructor() {
     super('Rule');
   }
 }
 
-module.exports = TagServices;
+module.exports = RuleServices;
