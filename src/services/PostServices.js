@@ -1,4 +1,4 @@
-const Services = require('./services');
+const Services = require('./Services');
 
 class PostServices extends Services {
   constructor() {
