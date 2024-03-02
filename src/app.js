@@ -4,6 +4,8 @@ const sequelize = require('./config/config.js')
 const app = express();
 app.use(routes)
 
+
+
 sequelize.authenticate()
 .then(() => {
   console.log('Conexão estabelecida com sucesso.');
