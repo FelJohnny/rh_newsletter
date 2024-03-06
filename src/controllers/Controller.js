@@ -9,7 +9,6 @@ class Controller{
     const dadosParaCriacao = req.body;
     try {
         const novoRegistroCriado = await this.propsServices.criaRegistro(dadosParaCriacao);
-        console.log(dadosParaCriacao)
         return res.status(200).json(novoRegistroCriado);
     } catch (e){
         return res.status(400).json({menssagem:`erro ao criar, mensagem do erro:${e}`})
@@ -48,7 +47,6 @@ async atulizaDadoController(req, res){
             
         }else{
             res.status(200).json({mensagem: `registro atualizado`})
-            console.log(foiAtulizado)
         }
     }catch(e){
         console.log(e)
@@ -61,7 +59,6 @@ async excluiRegistroController(req, res) {
     const { id } = req.params;
     try {
         await this.propsServices.excluiRegistro(Number(id));
-        console.log(id)
         return res.status(200).json({ mensagem: `id ${id} deletado` });
     }catch (error) {
         return res.status(500).json(error.message);
