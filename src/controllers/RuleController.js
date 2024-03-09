@@ -1,4 +1,4 @@
-const Controller = require('./Controller');
+const Controller = require('./Controller.js');
 const RuleServices = require('../services/RuleServices.js');
 
 const ruleServices = new RuleServices();

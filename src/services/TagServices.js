@@ -1,4 +1,4 @@
-const Services = require("./services");
+const Services = require("./Services.js");
 
 class TagServices extends Services{
     constructor(){
