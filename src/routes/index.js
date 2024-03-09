@@ -5,5 +5,6 @@ const usuarios = require('./usuariosRoutes.js');
 const posts = require('./postRoutes.js')
 
 module.exports = (app) => {
-  app.use( express.json(),tags, rules, usuarios, posts);
+  app.use( express.json());
+  app.use(tags, rules, usuarios, posts);
 };
