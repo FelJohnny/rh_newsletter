@@ -14,4 +14,5 @@ sequelize.authenticate()
   console.error('Não foi possível conectar ao banco de dados:', err);
 });
 
+
 module.exports = app;
