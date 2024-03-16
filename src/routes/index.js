@@ -3,6 +3,7 @@ const tags = require('./tagRoutes.js');
 const rules = require('./ruleRoutes.js');
 const usuarios = require('./usuariosRoutes.js');
 const posts = require('./postRoutes.js')
+const cors = require('cors');
 
 module.exports = (app) => {
   app.use( express.json());
