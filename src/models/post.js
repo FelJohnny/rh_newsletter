@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       titulo_post: DataTypes.STRING,
       descricao_post: DataTypes.STRING,
       anexo_post: DataTypes.STRING,
+      img_post: DataTypes.STRING,
     },
     {
       sequelize,
