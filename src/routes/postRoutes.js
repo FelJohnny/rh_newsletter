@@ -9,22 +9,22 @@ const express = require("express");
 const route = Router();
 
 route.use("/files", express.static("uploads"));
-route.post("/upload", upload.single("file"), (req, res) => {
+route.post("/rh_news/upload", upload.single("file"), (req, res) => {
   return res.json(req.file.filename);
 });
-route.post("/posts", (req, res) => {
+route.post("/rh_news/posts", (req, res) => {
   postController.criaRegistroController(req, res);
 });
-route.get("/posts", (req, res) => {
+route.get("/rh_news/posts", (req, res) => {
   postController.pegaTodosController(req, res);
 });
-route.get("/posts/:id", (req, res) =>
+route.get("/rh_news/posts/:id", (req, res) =>
   postController.pegaUmRegistroPorIdController(req, res)
 );
-route.put("/posts/:id", (req, res) =>
+route.put("/rh_news/posts/:id", (req, res) =>
   postController.atulizaDadoController(req, res)
 );
-route.delete("/posts/:id", (req, res) =>
+route.delete("/rh_news/posts/:id", (req, res) =>
   postController.excluiRegistroController(req, res)
 );
 

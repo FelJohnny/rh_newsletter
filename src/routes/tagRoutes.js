@@ -7,10 +7,10 @@ const tagController = new TagController()
 const route = Router();
 
 
-route.post('/tags', (req, res) => {tagController.criaRegistroController(req, res)});
-route.get('/tags', (req, res) => {tagController.pegaTodosController(req, res)});
-route.get('/tags/:id', (req, res) => tagController.pegaUmRegistroPorIdController(req, res));
-route.put('/tags/:id', (req, res) => tagController.atulizaDadoController(req, res));
-route.delete('/tags/:id', (req, res) => tagController.excluiRegistroController(req, res));
+route.post('/rh_news/tags', (req, res) => {tagController.criaRegistroController(req, res)});
+route.get('/rh_news/tags', (req, res) => {tagController.pegaTodosController(req, res)});
+route.get('/rh_news/tags/:id', (req, res) => tagController.pegaUmRegistroPorIdController(req, res));
+route.put('/rh_news/tags/:id', (req, res) => tagController.atulizaDadoController(req, res));
+route.delete('/rh_news/tags/:id', (req, res) => tagController.excluiRegistroController(req, res));
 
 module.exports = route
