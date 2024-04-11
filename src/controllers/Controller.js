@@ -52,7 +52,7 @@ class Controller {
       const listaDeRegistro = await this.propsServices.pegaTodosRegistros();
       return res.status(200).json(listaDeRegistro);
     } catch (e) {
-      //erro
+      console.log(e);
     }
   }
   //-------------------------------------READ-POR-ID-------------------------------------//

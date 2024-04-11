@@ -1,6 +1,7 @@
 const Controller = require('./Controller.js');
 const PostServices = require('../services/PostServices.js');
-const model = require('../models/index.js')
+const model = require('../models/index.js');
+
 const postServices = new PostServices();
 const camposObrigatorios = ['titulo_post','descricao_post','tag_id','usuario_post_id']
 
@@ -45,6 +46,29 @@ class PostController extends Controller {
       }
     } catch (e) {
       return res.status(400).json({message:`não foi possivel criar o post,${e}`,error: true})
+
+    }
+  }
+  async pegaTodosPostController(req,res){
+    const listaDePosts = await model.Post.findAll({
+      attributes:[
+        'id',
+        'titulo_post',
+        'descricao_post',
+        'anexo_post',
+        'img_post',
+        'createdAt',
+        'updatedAt',
+        'tag_id',
+        'usuario_post_id',
+        [model.sequelize.fn('CONCAT',process.env.URL_ADM + '/public/uploads/images/',model.sequelize.col('img_post')),'img_posts']
+      ],
+      order:[['id','DESC']]
+    })
+    if(listaDePosts){
+      return res.status(200).json(listaDePosts);
+    }else{
+      return res.status(400).json("erro: nenhum post encontrado");
 
     }
   }

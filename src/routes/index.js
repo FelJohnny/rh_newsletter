@@ -9,5 +9,4 @@ module.exports = (app) => {
   app.use(cors());
   app.use(express.json());
   app.use(tags, rules, usuarios, posts);
-
 };
