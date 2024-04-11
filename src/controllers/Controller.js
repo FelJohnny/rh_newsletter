@@ -6,16 +6,22 @@ class Controller {
   }
 
   async allowNull(req, res) {
-   
+    this.camposVazios = [] //serve para nao acumular valores duplicados na array
     const todosCamposTrue = this.camposObrigatorios.every((campo) => {
-      if (req.body[campo] === '') {
+
+      if (req.body[campo] == null) {
         this.camposVazios.push(campo)
       }
-      return req.body[campo] !== '';
+      
+      return req.body[campo];
     });
-    console.log(this.camposVazios);
-    if (todosCamposTrue) return { status: true };
-    else return { status: false, campos: this.camposVazios };
+    
+    if (todosCamposTrue){
+      return { status: true };
+    } 
+    else{
+      return { status: false, campos: this.camposVazios };
+    } 
   }
 
   //------------------------------------CREATE-------------------------------------------//
@@ -24,14 +30,13 @@ class Controller {
     const isTrue = await this.allowNull(req, res);
     try {
       if (isTrue.status) {
-        const novoRegistroCriado = await this.propsServices.criaRegistro(
-          dadosParaCriacao,
-        );
+        const novoRegistroCriado = await this.propsServices.criaRegistro(dadosParaCriacao);
         return res.status(200).json(novoRegistroCriado);
       } else {
-        return res.status(500).json({
+        return res.status(400).json({
           message: 'Preencha todos os campos necessarios',
           campos: isTrue.campos,
+          error: true,
         });
       }
     } catch (e) {
