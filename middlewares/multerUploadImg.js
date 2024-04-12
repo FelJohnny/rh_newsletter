@@ -11,7 +11,7 @@ module.exports = (multer({
         }
     }),
     fileFilter: (req,file, callback)=>{
-        const extencaoImg = ['image/png','image/jpg','image/jpeg'].find
+        const extencaoImg = ['image/png','image/jpg','image/jpeg','image/webp'].find
         (formatoAceito => formatoAceito == file.mimetype);
         if(extencaoImg){
             return callback(null,true);
