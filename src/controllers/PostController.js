@@ -61,7 +61,7 @@ class PostController extends Controller {
         'updatedAt',
         'tag_id',
         'usuario_post_id',
-        [model.sequelize.fn('CONCAT',process.env.URL_ADM + '/public/uploads/images/',model.sequelize.col('img_post')),'img_posts']
+        [model.sequelize.fn('CONCAT',process.env.URL_ADM + '/public/uploads/images/',model.sequelize.col('img_post')),'img_post']
       ],
       order:[['id','DESC']]
     })
