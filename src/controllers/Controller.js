@@ -5,7 +5,7 @@ class Controller {
     this.camposVazios = [];
   }
 
-  async allowNull(req, res) {
+   async allowNull(req, res) {
     this.camposVazios = [] //serve para nao acumular valores duplicados na array
     const todosCamposTrue = this.camposObrigatorios.every((campo) => {
 
@@ -33,16 +33,14 @@ class Controller {
         const novoRegistroCriado = await this.propsServices.criaRegistro(dadosParaCriacao);
         return res.status(200).json(novoRegistroCriado);
       } else {
-        return res.status(400).json({
+        return res.status(500).json({
           message: 'Preencha todos os campos necessarios',
           campos: isTrue.campos,
           error: true,
         });
       }
     } catch (e) {
-      return res
-        .status(400)
-        .json({ menssagem: `erro ao criar, mensagem do erro:${e}` });
+      return res.status(400).json({ message: `erro ao criar, mensagem do erro:${e}` });
     }
   }
 
@@ -53,6 +51,7 @@ class Controller {
       return res.status(200).json(listaDeRegistro);
     } catch (e) {
       console.log(e);
+      return res.status(500).json({ message: `erro ao buscar registro, mensagem do erro: ${e}` });
     }
   }
   //-------------------------------------READ-POR-ID-------------------------------------//
@@ -60,14 +59,15 @@ class Controller {
   async pegaUmRegistroPorIdController(req, res) {
     const { id } = req.params;
     try {
-      const umRegistro = await this.propsServices.pegaUmRegistroPorId(
-        Number(id),
-      );
-      return res.status(200).json(umRegistro);
-    } catch (erro) {
-      return res
-        .status(400)
-        .json({ menssagem: `erro ao buscar registro, mensagem do erro: ${e}` });
+      
+      const umRegistro = await this.propsServices.pegaUmRegistroPorId(Number(id));
+      if(umRegistro == null){
+        return res.status(400).json({message:`não foi possivel encontrar o registro: ${id}`,resposta:umRegistro});
+      }else{
+        return res.status(200).json(umRegistro);
+      }
+    } catch (erro){
+      return res.status(500).json({ message: `erro ao buscar registro, mensagem do erro: ${erro}` });
     }
   }
 
@@ -76,19 +76,23 @@ class Controller {
     const { id } = req.params;
     const dadosAtualizados = req.body;
     try {
-      const foiAtulizado = await this.propsServices.atualizaDado(
-        dadosAtualizados,
-        Number(id),
-      );
-      if (!foiAtulizado) {
-        res
-          .status(400)
-          .json({ mensagem: `o registro não ${id} foi atualizado` });
-      } else {
-        res.status(200).json({ mensagem: `registro atualizado` });
+      const umRegistro = await this.propsServices.pegaUmRegistroPorId(Number(id));
+      if(umRegistro == null){
+        return res.status(400).json({message:`não foi possivel encontrar o registro: ${id}`,resposta:umRegistro});
       }
+      const bodyOk = Object.getOwnPropertyNames(dadosAtualizados).every((campo) => {
+        return Object.values(umRegistro._options.attributes).includes(campo);
+      });
+
+      if(bodyOk){
+        const foiAtulizado = await this.propsServices.atualizaDado(dadosAtualizados,Number(id)); 
+        return res.status(200).json({ message: `registro atualizado`, reg:umRegistro});
+      }else{
+        return res.status(400).json({ message: `campos digitados não conferem`});
+      }
+
     } catch (e) {
-      console.log(e);
+      return res.status(500).json(e.message);
     }
   }
 
@@ -97,8 +101,12 @@ class Controller {
   async excluiRegistroController(req, res) {
     const { id } = req.params;
     try {
-      await this.propsServices.excluiRegistro(Number(id));
-      return res.status(200).json({ mensagem: `id ${id} deletado` });
+      const foiDeletado = await this.propsServices.excluiRegistro(Number(id));
+      if(foiDeletado === 0){
+        return res.status(400).json({message: `id ${id} não encontrado`,resposta: foiDeletado})
+      }else{
+        return res.status(200).json({ message: `id ${id} deletado`,resposta: foiDeletado });
+      }
     } catch (error) {
       return res.status(500).json(error.message);
     }

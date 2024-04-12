@@ -23,7 +23,6 @@ class Services{
         const ListaDeRegistrosAtualizado = model[this.nomeModel].update(dadosAtualizados,{
             where:{id:id}
         });
-        console.log(ListaDeRegistrosAtualizado)
         if(ListaDeRegistrosAtualizado[0] === 0){
             return false;
         }else{

@@ -1,6 +1,7 @@
 const Controller = require('./Controller.js');
 const PostServices = require('../services/PostServices.js');
 const model = require('../models/index.js');
+const { where } = require('sequelize');
 
 const postServices = new PostServices();
 const camposObrigatorios = ['titulo_post','descricao_post','tag_id','usuario_post_id']
@@ -69,6 +70,41 @@ class PostController extends Controller {
       return res.status(200).json(listaDePosts);
     }else{
       return res.status(400).json("erro: nenhum post encontrado");
+
+    }
+  }
+
+  async pegaPostPorIdController(req,res){
+    const {id} = req.params
+    
+    const postPorId = await model.Post.findAll({
+      where:{id:id},
+      attributes:[
+        'id',
+        'titulo_post',
+        'descricao_post',
+        'anexo_post',
+        'img_post',
+        'createdAt',
+        'updatedAt',
+        'tag_id',
+        'usuario_post_id',
+        [model.sequelize.fn('CONCAT',process.env.URL_ADM + '/public/uploads/images/',model.sequelize.col('img_post')),'img_post']
+      ],
+      order:[['id','DESC']],
+      include:[{
+        model: model.Tag,
+        
+      }],
+      
+    })
+    if(postPorId.length === 0){
+      return res.status(400).json({
+        message:`Post ${id} não encontrado na base de dados`,
+        error:true
+      });
+    }else{
+      return res.status(200).json(postPorId);
 
     }
   }

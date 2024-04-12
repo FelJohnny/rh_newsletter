@@ -24,7 +24,7 @@ const route = Router();
 
 route.post("/rh_news/posts", uploadImg.single("img_post"), (req, res) => postController.criaPostController(req, res));
 route.get("/rh_news/posts", (req, res) => postController.pegaTodosPostController(req, res));
-route.get("/rh_news/posts/:id", (req, res) => postController.pegaUmRegistroPorIdController(req, res));
+route.get("/rh_news/posts/:id", (req, res) => postController.pegaPostPorIdController(req, res));
 route.put("/rh_news/posts/:id", (req, res) => postController.atulizaDadoController(req, res));
 route.delete("/rh_news/posts/:id", (req, res) => postController.excluiRegistroController(req, res));
 
