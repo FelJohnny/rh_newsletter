@@ -35,7 +35,7 @@ class UsuarioController extends Controller {
         bodyReq.senha = senhaHash
         
         const usuarioCriado = await usuarioServies.CriaUsuario(bodyReq);
-        return res.status(201).json({message:'deu certo',usuario: usuarioCriado})
+        return res.status(201).json({message:'Usuario criado com sucesso',usuario: usuarioCriado})
       }
     } catch (e) {
       return res.status(500).json({ message: `erro ao criar, mensagem do erro:${e}` });

@@ -27,7 +27,6 @@ class UsuarioServices extends Services{
             return {status:true, retorno: retorno};
         }
     }
-
     async validaSenhaUsuario(usuario, senha){
         const retorno = await model.Usuario.findOne({
             attributes: ['email','usuario','senha'],
@@ -40,7 +39,6 @@ class UsuarioServices extends Services{
         const senhaIguais = await bcrypt.compare(senha, retorno.dataValues.senha);
         return senhaIguais;
     }
-
     async validaSenhaEmail(email, senha){
         const retorno = await model.Usuario.findOne({
             attributes: ['email','usuario','senha'],
@@ -53,8 +51,6 @@ class UsuarioServices extends Services{
         const senhaIguais = await bcrypt.compare(senha, retorno.dataValues.senha);
         return senhaIguais;
     }
-
-
     async CriaUsuario(dados){
         const usuario = await model.Usuario.create(dados)
         if(dados){
