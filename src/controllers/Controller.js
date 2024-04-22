@@ -5,7 +5,7 @@ class Controller {
     this.camposVazios = [];
   }
 
-   async allowNull(req, res) {
+  async allowNull(req, res) {
     this.camposVazios = [] //serve para nao acumular valores duplicados na array
     const todosCamposTrue = this.camposObrigatorios.every((campo) => {
 
@@ -21,7 +21,7 @@ class Controller {
     } 
     else{
       return { status: false, campos: this.camposVazios };
-    } 
+    }
   }
 
   //------------------------------------CREATE-------------------------------------------//

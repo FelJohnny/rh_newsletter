@@ -1,7 +1,9 @@
-const { Router, request, response } = require("express");
+const { Router } = require("express");
 const PostController = require("../controllers/PostController.js");
-
 const uploadImg = require('../../middlewares/multerUploadImg.js');
+const checkTokenLogin = require('../../middlewares/checkTokenLogin.js')
+
+
 const postController = new PostController();
 
 
@@ -22,10 +24,10 @@ const postController = new PostController();
 // }
 const route = Router();
 
-route.post("/rh_news/posts", uploadImg.single("img_post"), (req, res) => postController.criaPostController(req, res));
+route.post("/rh_news/posts", checkTokenLogin, uploadImg.single("img_post"), (req, res) => postController.criaPostController(req, res));
 route.get("/rh_news/posts", (req, res) => postController.pegaTodosPostController(req, res));
 route.get("/rh_news/posts/:id", (req, res) => postController.pegaPostPorIdController(req, res));
-route.put("/rh_news/posts/:id", (req, res) => postController.atulizaDadoController(req, res));
-route.delete("/rh_news/posts/:id", (req, res) => postController.excluiRegistroController(req, res));
+route.put("/rh_news/posts/:id", checkTokenLogin, (req, res) => postController.atulizaDadoController(req, res));
+route.delete("/rh_news/posts/:id", checkTokenLogin, (req, res) => postController.excluiRegistroController(req, res));
 
 module.exports = route;
