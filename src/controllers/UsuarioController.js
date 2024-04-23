@@ -75,7 +75,7 @@ class UsuarioController extends Controller {
       }
 
       if(!checkSenha){
-        return res.status(404).json({message:"Senha informada Invalida!"});
+        return res.status(401).json({message:"E-mail, usuario ou senha incorreta. Tente novamente!"});
       }
 
       try {
@@ -105,6 +105,8 @@ class UsuarioController extends Controller {
 
 
 
+    }else{
+      return res.status(401).json({message:"E-mail, usuario ou senha incorreta. Tente novamente!"});
     }
   }
 
